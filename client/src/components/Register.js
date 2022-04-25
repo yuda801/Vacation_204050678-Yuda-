@@ -8,6 +8,8 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { styled } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+
 
 import '../Main.css'
 
@@ -16,6 +18,7 @@ const StyleTextField = styled(TextField)({
 });
 
 const Register = (props) => {
+    let navigate = useNavigate();
     console.log("register-page")
 
     const users = props.users;
@@ -162,6 +165,12 @@ const Register = (props) => {
                         variant="outlined"
                         onClick={createUser}
                     >sign up</Button>
+                </Stack>
+                <Stack spacing={2} direction="row">
+                    <Button
+                        variant="outlined"
+                        onClick={() => { navigate('/login') }}
+                    >log-in</Button>
                 </Stack>
             </div >
         </>

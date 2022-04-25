@@ -12,9 +12,21 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import { Grid } from '@material-ui/core/';
+import IconButton from '@mui/material/IconButton';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
+import Badge from '@mui/material/Badge';
+import { useState } from 'react';
 
 const Home = (props) => {
+    const [follow, setFollow] = useState(false)
     console.log("home-page")
+
+    const hadleFollowButton = () => {
+        setFollow(!follow)
+
+    }
     let user = sessionStorage.getItem("user")
     let trips = props.trips
     // if (isLogedIn) {
@@ -59,9 +71,10 @@ const Home = (props) => {
                     {
                         trips.map((trip) => {
                             return (
-                                <Grid item xs={12} sm={6} md={3} >
+                                <Grid item xs={12} sm={6} md={4} >
+
                                     <Card
-                                        sx={{ maxWidth: 345 }}
+                                        sx={{ maxWidth: 345, m: 2 }}
                                         key={trip.tripID}
                                     >
                                         <CardMedia
@@ -79,8 +92,16 @@ const Home = (props) => {
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
-                                            <Button size="small">Share</Button>
-                                            <Button size="small">Learn More</Button>
+                                            <IconButton
+                                                size="large" aria-label="show 4 new mails" color="inherit"
+                                                onClick={hadleFollowButton}
+                                            >
+                                                <Badge badgeContent={4} color="error">
+                                                    {follow ? < FavoriteIcon /> : < FavoriteBorderIcon />}
+                                                </Badge>
+                                            </IconButton>
+                                            {/* <Button size="small">Share</Button>
+                                            <Button size="small">Learn More</Button> */}
                                         </CardActions>
                                     </Card>
                                 </Grid>
