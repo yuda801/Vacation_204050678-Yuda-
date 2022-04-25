@@ -1,8 +1,4 @@
-import { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom'
-import { useNavigate } from "react-router-dom";
 import * as React from 'react';
-
 import '../Main.css'
 
 import Box from '@mui/material/Box';
@@ -10,47 +6,15 @@ import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CardTravelIcon from '@mui/icons-material/CardTravel';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
-
-
-const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-    }),
-}));
-
-
-
-
+import { Grid } from '@material-ui/core/';
 
 const Home = (props) => {
-    const [expanded, setExpanded] = React.useState(false);
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
     console.log("home-page")
-
-    let navigate = useNavigate();
-
     let user = sessionStorage.getItem("user")
     let trips = props.trips
     // if (isLogedIn) {
@@ -88,41 +52,42 @@ const Home = (props) => {
             </Box>
             <div>
 
-                <Typography variant="h2" color="primary" component="div">
+                <Typography variant="h2" color="primary" component="div" className='center'>
                     Our Trips
                 </Typography>
-
-                {
-                    trips.map((trip) => {
-                        return (
-                            <div className='' style={{ display: 'flex' }} key={trip.tripID}>
-
-                                <Card sx={{ maxWidth: 345 }}>
-                                    <CardMedia
-                                        component="img"
-                                        alt="error loading picture"
-                                        height="140"
-                                        image={require(`../uploads/${trip.destination}.jpg`)}
-                                    />
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            {trip.destination}
-                                        </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            {trip.description}
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions>
-                                        <Button size="small">Share</Button>
-                                        <Button size="small">Learn More</Button>
-                                    </CardActions>
-                                </Card>
-
-
-                            </div>
-                        )
-                    })
-                }
+                <Grid container>
+                    {
+                        trips.map((trip) => {
+                            return (
+                                <Grid item xs={12} sm={6} md={3} >
+                                    <Card
+                                        sx={{ maxWidth: 345 }}
+                                        key={trip.tripID}
+                                    >
+                                        <CardMedia
+                                            component="img"
+                                            alt="error loading picture"
+                                            height="140"
+                                            image={require(`../uploads/${trip.destination}.jpg`)}
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                {trip.destination}
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                {trip.description}
+                                            </Typography>
+                                        </CardContent>
+                                        <CardActions>
+                                            <Button size="small">Share</Button>
+                                            <Button size="small">Learn More</Button>
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
+                            )
+                        })
+                    }
+                </Grid>
 
             </div >
         </>
@@ -232,3 +197,23 @@ export default Home;
 // </Collapse>
 // </Card>
 //  */}
+
+
+// const ExpandMore = styled((props) => {
+//     const { expand, ...other } = props;
+//     return <IconButton {...other} />;
+// })(({ theme, expand }) => ({
+//     transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+//     marginLeft: 'auto',
+//     transition: theme.transitions.create('transform', {
+//         duration: theme.transitions.duration.shortest,
+//     }),
+// }));
+
+
+// const useStyles = makeStyles(theme => ({
+//     root: {
+//         flexGrow: 1,
+//         padding: theme.spacing(2)
+//     }
+// }))
