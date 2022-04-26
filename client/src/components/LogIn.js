@@ -29,10 +29,11 @@ const LogIn = (props) => {
     let isLogedIn = sessionStorage.getItem("isRegistered")
     // if (isLogedIn) {
     //     alert("you are already loged-in")
-    //     navigate('/home')
+    //     navigate('/home')`
     // }
     const users = props.users;
-    const setUsers = props.setUsers;
+    const admin = props.admin;
+    // const setUsers = props.setUsers;
     const [user, setUser] = useState({
         userName: '',
         password: ''
@@ -57,6 +58,8 @@ const LogIn = (props) => {
 
         let userName = user.userName
         let password = user.password
+        let adminName = admin.userName
+        let adminPassword = admin.password
 
         //check if user entered userName and password
         if ((user.userName && user.password)) {
@@ -64,6 +67,10 @@ const LogIn = (props) => {
             //check if user is registered
             let isRegistered = false
             for (let i = 0; i < users.length; i++) {
+                if (users[i].userName === userName && users[i].password === password) {
+                    isRegistered = true;
+                    break;
+                }
                 if (users[i].userName === userName && users[i].password === password) {
                     isRegistered = true;
                     break;

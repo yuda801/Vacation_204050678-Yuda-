@@ -1,3 +1,5 @@
+
+
 import * as React from 'react';
 import '../Main.css';
 import './home.css';
@@ -12,31 +14,28 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
-import CardHeader from '@mui/material/CardHeader';
 import { Grid } from '@material-ui/core/';
 import IconButton from '@mui/material/IconButton';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 
 import Badge from '@mui/material/Badge';
 import { useState } from 'react';
 
-const Home = (props) => {
+const EditTrips = (props) => {
     const [follow, setFollow] = useState(false)
-    console.log("home-page")
+    console.log("EditTrips-page")
 
-    const hadleFollowButton = () => {
-        setFollow(!follow)
-    }
+    let admin = sessionStorage.getItem("admin")
+    let trips = props.trips;
 
-    let user = sessionStorage.getItem("user")
-    let trips = props.trips
     // if (isLogedIn) {
     //     alert("you are already loged-in")
-    //     //navigate('/home')
+    //     //navigate('/EditTrips')
     // }
 
     console.log("start")
@@ -62,12 +61,12 @@ const Home = (props) => {
                             color="inherit"
                             component="div"
                         >
-                            Hello {user}!
+                            Hello {admin}!
                         </Typography>
                     </Toolbar>
                 </AppBar>
             </Box>
-            <div className='home-background' style={{ background: '#afcadb' }}>
+            <div className='EditTrips-background' style={{ background: '#afcadb' }}>
 
                 {/* <CardHeader>our trips</CardHeader> */}
                 <Paper
@@ -130,126 +129,4 @@ const Home = (props) => {
     )
 }
 
-export default Home;
-
-{/* <img
-    key={trip.tripID}
-    // src={trip.destination}
-    // src={trips[index].destination}
-    style={{ height: 100, width: 100 }}
-    src={require(`../uploads/${trip.destination}.jpg`)}
-    // src={`${require}(../uploads/${trip.destination}.jpg).default`}
-    alt="error loading pic"
-/>  */}
-
-
-// import '../uploads/London.jpg';
-// import '../uploads/Rome.jpg';
-// import '../uploads/Paris.jpg'
-// import '../uploads/CapeTown.jpg'
-// import '../uploads/BuenosAires.jpg'
-// import '../uploads/Berlin.jpg'
-// import '../uploads/Bangkok.jpg'
-// import '../uploads/Wellington.jpg'
-// import '../uploads/WashingtonDC.jpg'
-// import '../uploads/Tokyo.jpg'
-
-// import London from '../uploads/London.jpg';
-// import Rome from '../uploads/Rome.jpg';
-// import Paris from '../uploads/Paris.jpg'
-// import CapeTown from '../uploads/CapeTown.jpg'
-// import BuenosAires from '../uploads/BuenosAires.jpg'
-// import Berlin from '../uploads/Berlin.jpg'
-// import Bangkok from '../uploads/Bangkok.jpg'
-// import Wellington from '../uploads/Wellington.jpg'
-// import WashingtonDC from '../uploads/WashingtonDC.jpg'
-// import Tokyo from '../uploads/Tokyo.jpg'
-
-
-// {/* <Card sx={{ maxWidth: 345 }}
-// key={trip.tripID}
-// >
-// <CardHeader
-//     avatar={
-//         <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-//             {/* optional - make a random trip symbole */}
-//             {trip.destination.substring(1, 0)}
-//         </Avatar>
-//     }
-//     action={
-//         <IconButton aria-label="settings">
-//             <MoreVertIcon />
-//         </IconButton>
-//     }
-//     title={trip.destination}
-//     subheader={trip.date}
-// />
-// {/* <CardMedia
-//     component="img"
-//     height="194"
-//     // image={`${require}(../uploads/${trip.destination}.jpg).default`}
-//     image={require(`../uploads/${trip.destination}.jpg`)}
-//     alt="Paella dish"
-// /> */}
-// <img
-//     key={trip.tripID}
-//     // src={trip.destination}
-//     // src={trips[index].destination}
-//     src={require(`../uploads/${trip.destination}.jpg`)}
-//     // src={`${require}(../uploads/${trip.destination}.jpg).default`}
-//     alt="error loading pic"
-// />
-// <CardContent>
-//     <Typography variant="body2" color="text.secondary">
-//         This impressive paella is a perfect party dish and a fun meal to cook
-//         together with your guests. Add 1 cup of frozen peas along with the mussels,
-//         if you like.
-//     </Typography>
-// </CardContent>
-// <CardActions disableSpacing>
-//     <IconButton aria-label="add to favorites">
-//         <FavoriteIcon />
-//     </IconButton>
-//     <IconButton aria-label="share">
-//         <ShareIcon />
-//     </IconButton>
-//     <ExpandMore
-//         expand={expanded}
-//         onClick={handleExpandClick}
-//         aria-expanded={expanded}
-//         aria-label="show more"
-//     >
-//         <ExpandMoreIcon />
-//     </ExpandMore>
-// </CardActions>
-// <Collapse in={expanded} timeout="auto" unmountOnExit>
-//     <CardContent>
-//         <Typography paragraph>Method:</Typography>
-//         <Typography paragraph>
-
-//         </Typography>
-
-//     </CardContent>
-// </Collapse>
-// </Card>
-//  */}
-
-
-// const ExpandMore = styled((props) => {
-//     const { expand, ...other } = props;
-//     return <IconButton {...other} />;
-// })(({ theme, expand }) => ({
-//     transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-//     marginLeft: 'auto',
-//     transition: theme.transitions.create('transform', {
-//         duration: theme.transitions.duration.shortest,
-//     }),
-// }));
-
-
-// const useStyles = makeStyles(theme => ({
-//     root: {
-//         flexGrow: 1,
-//         padding: theme.spacing(2)
-//     }
-// }))
+export default EditTrips;
