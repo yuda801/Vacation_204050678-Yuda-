@@ -11,10 +11,14 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
+import CardHeader from '@mui/material/CardHeader';
 import { Grid } from '@material-ui/core/';
 import IconButton from '@mui/material/IconButton';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import Stack from '@mui/material/Stack';
+import Paper from '@mui/material/Paper';
+
 
 import Badge from '@mui/material/Badge';
 import { useState } from 'react';
@@ -25,8 +29,8 @@ const Home = (props) => {
 
     const hadleFollowButton = () => {
         setFollow(!follow)
-
     }
+
     let user = sessionStorage.getItem("user")
     let trips = props.trips
     // if (isLogedIn) {
@@ -64,19 +68,24 @@ const Home = (props) => {
             </Box>
             <div>
 
-                <Typography variant="h2" color="primary" component="div" className='center'>
-                    Our Trips
-                </Typography>
+                <CardHeader>our trips</CardHeader>
+                <Paper
+                    elevation={10}
+                    className='center'
+                // variant='outlined'
+                >
+                    {/* <Stack direction="row" className='center'> */}
+                    <Typography variant="h2" color="primary" component="div" >
+                        OUR TRIPS
+                    </Typography>
+                    {/* </Stack> */}
+                </Paper>
                 <Grid container>
                     {
                         trips.map((trip) => {
                             return (
-                                <Grid item xs={12} sm={6} md={4} >
-
-                                    <Card
-                                        sx={{ maxWidth: 345, m: 2 }}
-                                        key={trip.tripID}
-                                    >
+                                <Grid item xs={12} sm={6} md={4} key={trip.tripID}>
+                                    <Card sx={{ maxWidth: 345, m: 2 }}>
                                         <CardMedia
                                             component="img"
                                             alt="error loading picture"
@@ -84,10 +93,14 @@ const Home = (props) => {
                                             image={require(`../uploads/${trip.destination}.jpg`)}
                                         />
                                         <CardContent>
-                                            <Typography gutterBottom variant="h5" component="div">
+                                            <Typography gutterBottom variant="h5" style={{ float: "left" }} component="div">
                                                 {trip.destination}
                                             </Typography>
-                                            <Typography variant="body2" color="text.secondary">
+                                            <Typography variant="h5" color="secondary" style={{ float: "right" }}>
+                                                {trip.date}
+                                            </Typography>
+                                            <br /><br />
+                                            <Typography variant="body2" color="primary">
                                                 {trip.description}
                                             </Typography>
                                         </CardContent>
