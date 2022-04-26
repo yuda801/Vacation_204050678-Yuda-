@@ -106,7 +106,7 @@ const Home = (props) => {
                                         </CardContent>
                                         <CardActions>
                                             <IconButton
-                                                size="large" aria-label="show 4 new mails" color="inherit"
+                                                size="large" color="inherit"
                                                 onClick={hadleFollowButton}
                                             >
                                                 <Badge badgeContent={4} color="error">
