@@ -5,6 +5,7 @@ import ErrorPage from './components/Error.js';
 import Home from './components/Home.js';
 import LogIn from './components/LogIn.js';
 import Register from './components/Register.js'
+import EditTrips from './components/EditTrips.js';
 
 const Main = () => {
     const [trips, setTrips] = useState([]);
@@ -40,11 +41,12 @@ const Main = () => {
 
         <BrowserRouter>
             <Routes>
+                {/* <Route path="/" element={<EditTrips users={users} admin={admin} />} /> */}
                 <Route path="/" element={<LogIn users={users} admin={admin} />} />
                 <Route path="/login" element={<LogIn users={users} admin={admin} />} />
                 <Route path="/register" element={<Register users={users} setUsers={setUsers} />} />
                 <Route path="/home" element={<Home trips={trips} />} />
-                {/* <Route path="/createNewMedicine" element={<CreateNewMedicine />} /> */}
+                <Route path="/edittrips" element={<EditTrips trips={trips} />} />
                 <Route path="*" element={<ErrorPage to="/" />} />
 
             </Routes>

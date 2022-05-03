@@ -2,6 +2,9 @@ import * as React from 'react';
 import '../Main.css';
 import './home.css';
 
+import LogIn from './LogIn.js';
+import { useNavigate } from "react-router-dom";
+
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
@@ -25,19 +28,42 @@ import Badge from '@mui/material/Badge';
 import { useState } from 'react';
 
 const Home = (props) => {
-    const [follow, setFollow] = useState(false)
+    const navigate = useNavigate();
     console.log("home-page")
 
     const hadleFollowButton = () => {
-        setFollow(!follow)
+
+        let body = {
+            ...user,
+            user
+        }
+
+        fetch('http://localhost:5000/api/trips',
+            {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log('data posted:')
+                console.log(data)
+            })
+            .catch(err => {
+                console.log('err')
+                console.log(err)
+            })
+
     }
 
+
     let user = sessionStorage.getItem("user")
+    let adminIsLoged = sessionStorage.getItem("adminPermissions")
+    let userIsLoged = sessionStorage.getItem("isRegistered")
+    if (!adminIsLoged && !userIsLoged) {
+        navigate('/login');
+    }
     let trips = props.trips
-    // if (isLogedIn) {
-    //     alert("you are already loged-in")
-    //     //navigate('/home')
-    // }
 
     console.log("start")
     console.log(trips)
@@ -68,7 +94,7 @@ const Home = (props) => {
                 </AppBar>
             </Box>
             <div className='home-background' style={{ background: '#afcadb' }}>
-
+                {/* <br /> */}
                 {/* <CardHeader>our trips</CardHeader> */}
                 <Paper
                     style={{ background: '#8ebdaf' }}
@@ -76,9 +102,10 @@ const Home = (props) => {
                     className='center'
                 // variant='outlined'
                 >
+
                     {/* <Stack direction="row" className='center'> */}
-                    <Typography variant="h2" color="primary" component="div" style={{ background: '' }}>
-                        OUR TRIPS
+                    <Typography variant="h4" color="primary" component="div" style={{ background: '' }}>
+                        our trips
                     </Typography>
                     {/* </Stack> */}
                 </Paper>
@@ -86,7 +113,9 @@ const Home = (props) => {
                     {
                         trips.map((trip) => {
                             return (
-                                <Grid item xs={12} sm={6} md={4} key={trip.tripID}>
+                                <Grid item xs={12} sm={6} md={4} key={trip.tripID}
+                                    id={`${trip.destination}trip-card`}
+                                >
                                     <Card sx={{ maxWidth: 345, m: 2 }}>
                                         <CardMedia
                                             component="img"
@@ -111,12 +140,11 @@ const Home = (props) => {
                                                 size="large" color="inherit"
                                                 onClick={hadleFollowButton}
                                             >
-                                                <Badge badgeContent={4} color="error">
-                                                    {follow ? < FavoriteIcon /> : < FavoriteBorderIcon />}
+                                                <Badge badgeContent={trip.numOfFolowers} color="error">
+                                                    {/* {follow ? < FavoriteIcon /> : < FavoriteBorderIcon />} */}
+                                                    < FavoriteIcon />
                                                 </Badge>
                                             </IconButton>
-                                            {/* <Button size="small">Share</Button>
-                                            <Button size="small">Learn More</Button> */}
                                         </CardActions>
                                     </Card>
                                 </Grid>
@@ -131,6 +159,9 @@ const Home = (props) => {
 }
 
 export default Home;
+
+{/* <Button size="small">Share</Button>
+ <Button size="small">Learn More</Button> */}
 
 {/* <img
     key={trip.tripID}
@@ -253,3 +284,12 @@ export default Home;
 //         padding: theme.spacing(2)
 //     }
 // }))
+
+// setUsers(users => [...users, newUser])
+// console.log("users after setting them:" + users)
+// setNewUser({
+//     firstName: '',
+//     lastName: '',
+//     userName: '',
+//     password: ''
+// })

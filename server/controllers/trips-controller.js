@@ -35,6 +35,28 @@ tripsRouter.delete('/trips/:id', async (req, res) => {
     }
 })
 
+
+tripsRouter.patch('/trips/:id', async (req, res) => {
+    let result = await updateTrip(req.body, req.params.id);
+
+    if (!result.success) {
+        res.status(500).send(result)
+    } else {
+        res.send(result)
+    }
+})
+
 export {
     tripsRouter
 }
+
+
+// tripsRouter.patch('/trips/:id', async (req, res) => {
+//     let result = await updateTrip(req.params.id);
+
+//     if (!result.success) {
+//         res.status(500).send(result)
+//     } else {
+//         res.send(result)
+//     }
+// })

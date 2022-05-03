@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Redirect } from "react-router-dom";
 
 import '../Main.css'
-import Register from './Register';
+import Register from './Register.js';
 import Home from './Home.js';
+import EditTrips from './EditTrips.js';
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -27,13 +28,9 @@ const LogIn = (props) => {
     let navigate = useNavigate();
 
     let isLogedIn = sessionStorage.getItem("isRegistered")
-    // if (isLogedIn) {
-    //     alert("you are already loged-in")
-    //     navigate('/home')`
-    // }
-    const users = props.users;
-    const admin = props.admin;
-    // const setUsers = props.setUsers;
+
+    //users = list of all users.  
+
     const [user, setUser] = useState({
         userName: '',
         password: ''
@@ -51,6 +48,9 @@ const LogIn = (props) => {
     const hendleLogIn = (e) => {
         e.preventDefault()
 
+        const users = props.users;
+        const admin = props.admin;
+
         if (isLogedIn) {
             // alert("you are already loged-in")
             navigate('/home')
@@ -58,34 +58,47 @@ const LogIn = (props) => {
 
         let userName = user.userName
         let password = user.password
-        let adminName = admin.userName
-        let adminPassword = admin.password
 
         //check if user entered userName and password
         if ((user.userName && user.password)) {
+            console.log("all fields filled")
 
-            //check if user is registered
             let isRegistered = false
+            let adminEntered = false;
+
+            //check if admin
+            if (userName === admin[0].userName && password === admin[0].password) {
+                console.log("admin entered")
+                adminEntered = true;
+            }
+            if (adminEntered) {
+                sessionStorage.setItem("adminPermissions", true);
+                sessionStorage.setItem("adminName", userName)
+                navigate('/edittrips');
+                return;
+            }
+
+            //check if registered
             for (let i = 0; i < users.length; i++) {
                 if (users[i].userName === userName && users[i].password === password) {
                     isRegistered = true;
                     break;
                 }
-                if (users[i].userName === userName && users[i].password === password) {
-                    isRegistered = true;
-                    break;
-                }
             }
+
             if (isRegistered) {
+                console.log("is registered")
                 sessionStorage.setItem("isRegistered", true)
                 sessionStorage.setItem("user", userName)
                 navigate('/home');
             }
             else {
+                console.log("isRegistered === false")
                 alert("wrong user name or password, please check again")
             }
         }
         else {
+            console.log("didn't fill all info")
             alert("please enter your user name and password")
         }
     }

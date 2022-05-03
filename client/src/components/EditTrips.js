@@ -3,6 +3,9 @@
 import * as React from 'react';
 import '../Main.css';
 import './home.css';
+import LogIn from './LogIn.js';
+import { useNavigate } from "react-router-dom";
+
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -21,22 +24,23 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
 import Badge from '@mui/material/Badge';
 import { useState } from 'react';
 
 const EditTrips = (props) => {
+    let navigate = useNavigate();
+    let adminUserName = sessionStorage.getItem("adminName");
     const [follow, setFollow] = useState(false)
     console.log("EditTrips-page")
 
-    let admin = sessionStorage.getItem("admin")
+    let isAdmin = sessionStorage.getItem("admin")
+    if (!isAdmin) {
+        navigate('/login')
+    }
     let trips = props.trips;
-
-    // if (isLogedIn) {
-    //     alert("you are already loged-in")
-    //     //navigate('/EditTrips')
-    // }
 
     console.log("start")
     console.log(trips)
@@ -61,31 +65,27 @@ const EditTrips = (props) => {
                             color="inherit"
                             component="div"
                         >
-                            Hello {admin}!
+                            hello {adminUserName}!
                         </Typography>
                     </Toolbar>
                 </AppBar>
             </Box>
             <div className='EditTrips-background' style={{ background: '#afcadb' }}>
-
-                {/* <CardHeader>our trips</CardHeader> */}
                 <Paper
                     style={{ background: '#8ebdaf' }}
                     elevation={10}
                     className='center'
                 // variant='outlined'
                 >
-                    {/* <Stack direction="row" className='center'> */}
-                    <Typography variant="h2" color="primary" component="div" style={{ background: '' }}>
-                        OUR TRIPS
+                    <Typography variant="h2" color="primary" component="div" style={{}}>
+                        MANAGE TRIPS
                     </Typography>
-                    {/* </Stack> */}
                 </Paper>
                 <Grid container>
                     {
                         trips.map((trip) => {
                             return (
-                                <Grid item xs={12} sm={6} md={4} key={trip.tripID}>
+                                <Grid item xs={12} sm={6} md={4} key={trip.tripID} >
                                     <Card sx={{ maxWidth: 345, m: 2 }}>
                                         <CardMedia
                                             component="img"
@@ -108,14 +108,15 @@ const EditTrips = (props) => {
                                         <CardActions>
                                             <IconButton
                                                 size="large" color="inherit"
-                                                onClick={hadleFollowButton}
+                                            // onClick={}
                                             >
                                                 <Badge badgeContent={4} color="error">
                                                     {follow ? < FavoriteIcon /> : < FavoriteBorderIcon />}
                                                 </Badge>
                                             </IconButton>
-                                            {/* <Button size="small">Share</Button>
-                                            <Button size="small">Learn More</Button> */}
+                                            <Button size="small">
+                                                <DeleteForeverIcon />
+                                            </Button>
                                         </CardActions>
                                     </Card>
                                 </Grid>
