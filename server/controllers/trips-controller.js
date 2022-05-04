@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllTrips, addTrip, deleteTrip } from '../buissness-logic/trips-bl.js';
+import { getAllTrips, addTrip, deleteTrip, updateTrip } from '../buissness-logic/trips-bl.js';
 const tripsRouter = express.Router();
 
 tripsRouter.get('/trips', async (_, res) => {
@@ -37,7 +37,7 @@ tripsRouter.delete('/trips/:id', async (req, res) => {
 
 
 tripsRouter.patch('/trips/:id', async (req, res) => {
-    let result = await updateTrip(req.body, req.params.id);
+    let result = await updateTrip(req.params.id, req.body);
 
     if (!result.success) {
         res.status(500).send(result)
@@ -49,14 +49,3 @@ tripsRouter.patch('/trips/:id', async (req, res) => {
 export {
     tripsRouter
 }
-
-
-// tripsRouter.patch('/trips/:id', async (req, res) => {
-//     let result = await updateTrip(req.params.id);
-
-//     if (!result.success) {
-//         res.status(500).send(result)
-//     } else {
-//         res.send(result)
-//     }
-// })
