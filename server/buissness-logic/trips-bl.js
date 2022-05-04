@@ -19,9 +19,6 @@ const updateTrip = async (id, body) => {
 const deleteTrip = async (id) => {
     return await tripsDal.deleteTrip(id)
 }
-// const updateTrip = async (id) => {
-//     return await tripsDal.updateTrip(id)
-// }
 
 export {
     getAllTrips,

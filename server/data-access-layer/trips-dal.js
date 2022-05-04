@@ -63,7 +63,7 @@ const updateTrip = async (id, description, destination,
         let res = await connection.promise().query(
             `UPDATE trips 
             SET description = '${description}', destination = '${destination}', 
-                date = '${data}', price = '${price}', numOfFolowers = '${numOfFolowers}')
+                date = '${date}', price = '${price}', numOfFolowers = '${numOfFolowers}'
             WHERE tripID = ${id}`
         )
 
@@ -74,7 +74,6 @@ const updateTrip = async (id, description, destination,
     } catch (err) {
         result.success = false
         result.data = err
-
         return result
     }
 }
