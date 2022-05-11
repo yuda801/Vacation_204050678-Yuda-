@@ -1,9 +1,6 @@
-import * as React from 'react';
 import '../Main.css';
 import './home.css';
-
 import LogIn from './LogIn.js';
-import { useNavigate } from "react-router-dom";
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -22,37 +19,39 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
-
-
 import Badge from '@mui/material/Badge';
+
+import * as React from 'react';
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const Home = (props) => {
     const navigate = useNavigate();
+    const [follow, setFollow] = useState(false);
     console.log("home-page")
+    let trips = props.trips;
 
-    const hadleFollowButton = () => {
+    const hadleFollowButton = (trip) => {
+        setFollow(!follow)
+        if (follow) trip.numOfFolowers++;
+        else trip.numOfFolowers--;
+        console.log("🚀 ~ file: Home.js ~ line 38 ~ hadleFollowButton ~ trip", trip)
 
-        let body = {
-            ...user,
-            user
-        }
-
-        fetch('http://localhost:5000/api/trips',
-            {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body)
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log('data posted:')
-                console.log(data)
-            })
-            .catch(err => {
-                console.log('err')
-                console.log(err)
-            })
+        // fetch(`http://localhost:5000/api/trips/${id}`,
+        //     {
+        //         method: 'PUT',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         // body: JSON.stringify(trip)
+        //     })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         console.log('data posted:')
+        //         console.log(data)
+        //     })
+        //     .catch(err => {
+        //         console.log('err')
+        //         console.log(err)
+        //     })
 
     }
 
@@ -60,14 +59,11 @@ const Home = (props) => {
     let user = sessionStorage.getItem("user")
     let adminIsLoged = sessionStorage.getItem("adminPermissions")
     let userIsLoged = sessionStorage.getItem("isRegistered")
+
+    //Redirects user who changed the URL while not loged-in
     if (!adminIsLoged && !userIsLoged) {
         navigate('/login');
     }
-    let trips = props.trips
-
-    console.log("start")
-    console.log(trips)
-    console.log("end")
 
     return (
         <>
@@ -94,7 +90,6 @@ const Home = (props) => {
                 </AppBar>
             </Box>
             <div className='home-background' style={{ background: '#afcadb' }}>
-                {/* <br /> */}
                 {/* <CardHeader>our trips</CardHeader> */}
                 <Paper
                     style={{ background: '#8ebdaf' }}
@@ -138,11 +133,14 @@ const Home = (props) => {
                                         <CardActions>
                                             <IconButton
                                                 size="large" color="inherit"
-                                                onClick={hadleFollowButton}
+                                                onClick={() => hadleFollowButton(trip)}
                                             >
-                                                <Badge badgeContent={trip.numOfFolowers} color="error">
-                                                    {/* {follow ? < FavoriteIcon /> : < FavoriteBorderIcon />} */}
-                                                    < FavoriteIcon />
+                                                <Badge badgeContent={trip.numOfFolowers} color="error"
+                                                // onClick={follow ? < FavoriteIcon /> : < FavoriteBorderIcon />}
+                                                >
+                                                    {follow && < FavoriteIcon />}
+                                                    {!follow && <FavoriteBorderIcon />}
+
                                                 </Badge>
                                             </IconButton>
                                         </CardActions>
