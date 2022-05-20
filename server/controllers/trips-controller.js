@@ -36,7 +36,7 @@ tripsRouter.delete('/trips/:id', async (req, res) => {
 })
 
 
-tripsRouter.patch('/trips/:id', async (req, res) => {
+tripsRouter.put('/trips/:id', async (req, res) => {
     let result = await updateTrip(req.params.id, req.body);
 
     if (!result.success) {

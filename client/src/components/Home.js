@@ -1,64 +1,28 @@
 import '../Main.css';
 import './home.css';
 import LogIn from './LogIn.js';
-
+import Trip from './Trip';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CardTravelIcon from '@mui/icons-material/CardTravel';
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
-import CardHeader from '@mui/material/CardHeader';
 import { Grid } from '@material-ui/core/';
-import IconButton from '@mui/material/IconButton';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
-import Badge from '@mui/material/Badge';
-
 import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 const Home = (props) => {
     const navigate = useNavigate();
-    const [follow, setFollow] = useState(false);
-    console.log("home-page")
     let trips = props.trips;
-
-    const hadleFollowButton = (trip) => {
-        setFollow(!follow)
-        if (follow) trip.numOfFolowers++;
-        else trip.numOfFolowers--;
-        console.log("🚀 ~ file: Home.js ~ line 38 ~ hadleFollowButton ~ trip", trip)
-
-        // fetch(`http://localhost:5000/api/trips/${id}`,
-        //     {
-        //         method: 'PUT',
-        //         headers: { 'Content-Type': 'application/json' },
-        //         // body: JSON.stringify(trip)
-        //     })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         console.log('data posted:')
-        //         console.log(data)
-        //     })
-        //     .catch(err => {
-        //         console.log('err')
-        //         console.log(err)
-        //     })
-
-    }
-
 
     let user = sessionStorage.getItem("user")
     let adminIsLoged = sessionStorage.getItem("adminPermissions")
     let userIsLoged = sessionStorage.getItem("isRegistered")
+
+    // const userFollowlist = localStorage.setItem("userFollows", [])
+    const [flwStorage, setFlwStorage] = useState([])
 
     //Redirects user who changed the URL while not loged-in
     if (!adminIsLoged && !userIsLoged) {
@@ -108,44 +72,10 @@ const Home = (props) => {
                     {
                         trips.map((trip) => {
                             return (
-                                <Grid item xs={12} sm={6} md={4} key={trip.tripID}
-                                    id={`${trip.destination}trip-card`}
-                                >
-                                    <Card sx={{ maxWidth: 345, m: 2 }}>
-                                        <CardMedia
-                                            component="img"
-                                            alt="error loading picture"
-                                            height="140"
-                                            image={require(`../uploads/${trip.destination}.jpg`)}
-                                        />
-                                        <CardContent>
-                                            <Typography gutterBottom variant="h5" style={{ float: "left" }} component="div">
-                                                {trip.destination}
-                                            </Typography>
-                                            <Typography variant="h5" color="secondary" style={{ float: "right" }}>
-                                                {trip.date}
-                                            </Typography>
-                                            <br /><br />
-                                            <Typography variant="body2" color="primary">
-                                                {trip.description}
-                                            </Typography>
-                                        </CardContent>
-                                        <CardActions>
-                                            <IconButton
-                                                size="large" color="inherit"
-                                                onClick={() => hadleFollowButton(trip)}
-                                            >
-                                                <Badge badgeContent={trip.numOfFolowers} color="error"
-                                                // onClick={follow ? < FavoriteIcon /> : < FavoriteBorderIcon />}
-                                                >
-                                                    {follow && < FavoriteIcon />}
-                                                    {!follow && <FavoriteBorderIcon />}
-
-                                                </Badge>
-                                            </IconButton>
-                                        </CardActions>
-                                    </Card>
-                                </Grid>
+                                <Trip trip={trip} key={trip.tripID}
+                                    flwStorage={flwStorage}
+                                    setFlwStorage={setFlwStorage}
+                                ></Trip>
                             )
                         })
                     }

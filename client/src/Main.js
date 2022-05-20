@@ -13,26 +13,26 @@ const Main = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/trips')
+        fetch('http://localhost:5001/api/trips')
             .then(res => res.json())
             .then(data => {
-                console.table(data.data)
+                // console.table(data.data)
                 setTrips(data.data)
             })
     }, [])
     useEffect(() => {
-        fetch('http://localhost:5000/api/admin')
+        fetch('http://localhost:5001/api/admin')
             .then(res => res.json())
             .then(data => {
-                console.table(data.data)
+                // console.table(data.data)
                 setAdmin(data.data)
             })
     }, [])
     useEffect(() => {
-        fetch('http://localhost:5000/api/users')
+        fetch('http://localhost:5001/api/users')
             .then(res => res.json())
             .then(data => {
-                console.table(data.data)
+                // console.table(data.data)
                 setUsers(data.data)
             })
     }, [])

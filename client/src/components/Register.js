@@ -54,7 +54,6 @@ const Register = (props) => {
 
     const createUser = (e) => {
         e.preventDefault()
-        // preper body data
         if (!checkUniqueUserName()) {
             alert("user name already exists")
             return;
@@ -63,7 +62,7 @@ const Register = (props) => {
             ...newUser
         }
         if ((newUser.firstName && newUser.lastName && newUser.userName && newUser.password)) {
-            fetch('http://localhost:5000/api/users',
+            fetch('http://localhost:5001/api/users',
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
