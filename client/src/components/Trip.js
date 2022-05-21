@@ -13,9 +13,8 @@ import * as React from 'react';
 import { useState } from 'react';
 import { createTheme } from '@mui/material/styles';
 
-const checkFollow = () => {
-
-}
+//idea - insteda of a full page for admin, i can just add a conditionally
+//delete icon that apears when admin is loged in
 
 const Trip = (props) => {
 
@@ -24,9 +23,8 @@ const Trip = (props) => {
     let { setFlwStorage } = props;
     const [follow, setFollow] = useState(false);
     let userFollows = localStorage.getItem("userFollows")
-    // let follows = userFollows.some(trp => trp === trip.destination)
-    // if (follows) setFollow(true);
-    // else setFollow(false);
+    let follows = flwStorage.some(trp => trp === flwStorage.destination)
+    if (follows) setFollow(true);
 
     const hadleFollowButtonClick = (trip) => {
         //if user starts following
@@ -34,21 +32,21 @@ const Trip = (props) => {
             console.log("if user starts following")
             flwStorage.push(trip.destination);
             console.log(flwStorage)
+            setFlwStorage(flwStorage)
             localStorage.setItem("userFollows", flwStorage);
             trip.numOfFolowers++;
             setFollow(true);
-            console.log("follow is: " + follow);
         }
 
         //if user stops following
         if (follow) {
             console.log("if user stops following")
-            flwStorage.filter(trp => trp !== trip.destination);
+            let filterd = flwStorage.filter(trp => trp !== trip.destination);
+            flwStorage = filterd
             console.log(flwStorage)
             localStorage.setItem("userFollows", flwStorage);
             trip.numOfFolowers--;
             setFollow(false);
-            console.log("follow is: " + follow);
         }
 
         // let newTrip = {
