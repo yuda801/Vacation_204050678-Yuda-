@@ -24,7 +24,7 @@ const StyleTextField = styled(TextField)({
 });
 
 const LogIn = (props) => {
-    console.log("log-in-page")
+    // console.log("log-in-page")
     let navigate = useNavigate();
 
     let isLogedIn = sessionStorage.getItem("isRegistered")
@@ -52,8 +52,8 @@ const LogIn = (props) => {
         const admin = props.admin;
 
         if (isLogedIn) {
-            // alert("you are already loged-in")
             navigate('/home')
+            alert("you are already loged-in")
         }
 
         let userName = user.userName

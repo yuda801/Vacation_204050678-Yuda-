@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import '../Main.css';
-import './home.css';
+// import './home.css';
 import LogIn from './LogIn.js';
 import { useNavigate } from "react-router-dom";
 

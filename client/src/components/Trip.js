@@ -16,6 +16,12 @@ import { createTheme } from '@mui/material/styles';
 //idea - insteda of a full page for admin, i can just add a conditionally
 //delete icon that apears when admin is loged in
 
+// //writing this function becouse states do not update till function ends running
+// const setStorage = (arr) => {
+//     localStorage.setItem("userFollows", arr);
+//     console.log(arr)
+// }
+
 const Trip = (props) => {
 
     let { trip } = props;
@@ -23,16 +29,22 @@ const Trip = (props) => {
     let { setFlwStorage } = props;
     const [follow, setFollow] = useState(false);
     let userFollows = localStorage.getItem("userFollows")
-    let follows = flwStorage.some(trp => trp === flwStorage.destination)
-    if (follows) setFollow(true);
+    console.log(userFollows)
+    // let follows = flwStorage.some(trp => trp === flwStorage.destination)
+    let follows = userFollows.includes(trip.destination);
+    console.log(follows)
+    // if (follows) setFollow(true);
 
-    const hadleFollowButtonClick = (trip) => {
+    const hadleFollowButtonClick = () => {
         //if user starts following
         if (!follow) {
             console.log("if user starts following")
-            flwStorage.push(trip.destination);
+            if (!flwStorage.includes(trip.destination)) {
+                flwStorage.push(trip.destination);
+            }
             console.log(flwStorage)
-            setFlwStorage(flwStorage)
+            // setFlwStorage(flwStorage)
+            // setStorage(flwStorage)
             localStorage.setItem("userFollows", flwStorage);
             trip.numOfFolowers++;
             setFollow(true);
@@ -42,36 +54,38 @@ const Trip = (props) => {
         if (follow) {
             console.log("if user stops following")
             let filterd = flwStorage.filter(trp => trp !== trip.destination);
-            flwStorage = filterd
+            console.log(filterd)
+            flwStorage = filterd.slice();
             console.log(flwStorage)
-            localStorage.setItem("userFollows", flwStorage);
+            // setStorage(filterd)
+            localStorage.setItem("userFollows", filterd);
             trip.numOfFolowers--;
             setFollow(false);
         }
 
-        // let newTrip = {
-        //     description: trip.description,
-        //     destination: trip.destination,
-        //     date: trip.date,
-        //     price: trip.price,
-        //     numOfFolowers: trip.numOfFolowers
-        // }
+        let newTrip = {
+            description: trip.description,
+            destination: trip.destination,
+            date: trip.date,
+            price: trip.price,
+            numOfFolowers: trip.numOfFolowers
+        }
 
-        // fetch(`http://localhost:5001/api/trips/${trip.tripID}`,
-        //     {
-        //         method: 'PUT',
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify(newTrip)
-        //     })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         console.log('data posted:')
-        //         console.log(data)
-        //     })
-        //     .catch(err => {
-        //         console.log('err')
-        //         console.log(err)
-        //     })
+        fetch(`http://localhost:5001/api/trips/${trip.tripID}`,
+            {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newTrip)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log('data posted:')
+                console.log(data)
+            })
+            .catch(err => {
+                console.log('err')
+                console.log(err)
+            })
     }
 
     return (
@@ -106,7 +120,7 @@ const Trip = (props) => {
                 <CardActions>
                     <IconButton
                         size="large" color="inherit"
-                        onClick={() => hadleFollowButtonClick(trip)}
+                        onClick={() => hadleFollowButtonClick()}
                     >
                         <Badge badgeContent={trip.numOfFolowers} color="error">
                             {follow ? < FavoriteIcon /> : < FavoriteBorderIcon />}
