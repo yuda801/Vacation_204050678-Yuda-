@@ -1,5 +1,4 @@
 import '../Main.css';
-// import './home.css';
 import LogIn from './LogIn.js';
 import Trip from './Trip';
 import Box from '@mui/material/Box';
@@ -21,9 +20,11 @@ const Home = (props) => {
     let adminIsLoged = sessionStorage.getItem("adminPermissions")
     let userIsLoged = sessionStorage.getItem("isRegistered")
 
-    // const userFollowlist = localStorage.setItem("userFollows", [])
-    // const [flwStorage, setFlwStorage] = useState([])
+    localStorage.setItem("userFollows", [])
     let flwStorage = [];
+
+
+
     //Redirects user who changed the URL while not loged-in
     if (!adminIsLoged && !userIsLoged) {
         navigate('/login');
@@ -72,10 +73,13 @@ const Home = (props) => {
                     {
                         trips.map((trip) => {
                             return (
-                                <Trip trip={trip} key={trip.tripID}
-                                    flwStorage={flwStorage}
-                                // setFlwStorage={setFlwStorage}
-                                ></Trip>
+                                <>
+                                    < Trip
+                                        trip={trip} key={trip.tripID}
+                                        flwStorage={flwStorage}
+                                    // setFlwStorage={setFlwStorage}
+                                    ></Trip>
+                                </>
                             )
                         })
                     }
