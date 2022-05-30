@@ -49,7 +49,7 @@ const Home = (props) => {
                             color="inherit"
                             component="div"
                         >
-                            Hello {user}!
+                            Hello {user ? user : "admin"}!
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -73,13 +73,11 @@ const Home = (props) => {
                     {
                         trips.map((trip) => {
                             return (
-                                <>
-                                    < Trip
-                                        trip={trip} key={trip.tripID}
-                                        flwStorage={flwStorage}
-                                    // setFlwStorage={setFlwStorage}
-                                    ></Trip>
-                                </>
+                                <Trip
+                                    trip={trip} key={trip.tripID}
+                                    flwStorage={flwStorage}
+                                    adminIsLoged={adminIsLoged}
+                                ></Trip>
                             )
                         })
                     }

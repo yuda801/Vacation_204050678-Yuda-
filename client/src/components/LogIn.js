@@ -17,8 +17,6 @@ import Toolbar from '@mui/material/Toolbar';
 import { styled } from "@mui/material/styles";
 import LoginIcon from '@mui/icons-material/Login';
 
-
-
 const StyleTextField = styled(TextField)({
     backgroundColor: "#fff",
 });
@@ -74,7 +72,7 @@ const LogIn = (props) => {
             if (adminEntered) {
                 sessionStorage.setItem("adminPermissions", true);
                 sessionStorage.setItem("adminName", userName)
-                navigate('/edittrips');
+                navigate('/home');
                 return;
             }
 
